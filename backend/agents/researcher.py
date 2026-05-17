@@ -4,7 +4,7 @@ from tavily import TavilyClient
 
 class ResearcherAgent:
     def __init__(self):
-        self.client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
+        self.client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY") or "missing_key")
 
     def run(self, query: str, plan: List[str]) -> Tuple[str, List[str]]:
         try:

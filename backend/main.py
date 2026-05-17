@@ -24,12 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-planner = PlannerAgent()
-researcher = ResearcherAgent()
-writer = WriterAgent()
-critic = CriticAgent()
-compiler = CompilerAgent()
-
 @app.get("/")
 def read_root():
     return {"message": "Welcome to ResearchMind API"}
@@ -44,6 +38,12 @@ def health_check():
 @app.post("/research", response_model=ResearchReport)
 async def run_research(request: ResearchRequest):
     try:
+        planner = PlannerAgent()
+        researcher = ResearcherAgent()
+        writer = WriterAgent()
+        critic = CriticAgent()
+        compiler = CompilerAgent()
+        
         # Pipeline execution
         plan = planner.run(request.query)
         raw_data, sources = researcher.run(request.query, plan)
@@ -54,3 +54,4 @@ async def run_research(request: ResearchRequest):
         return report
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
