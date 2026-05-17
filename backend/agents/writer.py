@@ -6,7 +6,7 @@ from utils import retry_gemini
 class WriterAgent:
     def __init__(self):
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-        self.model = genai.GenerativeModel("gemini-1.5-flash", generation_config={"temperature": 0.7})
+        self.model = genai.GenerativeModel("gemini-2.5-flash", generation_config={"temperature": 0.7})
 
     @retry_gemini
     def run(self, query: str, plan: List[str], raw_data: str) -> str:
