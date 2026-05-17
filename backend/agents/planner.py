@@ -1,7 +1,7 @@
 from typing import List
 import os
 import google.generativeai as genai
-from ..utils import retry_gemini
+from utils import retry_gemini
 
 class PlannerAgent:
     def __init__(self):

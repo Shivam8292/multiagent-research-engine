@@ -2,7 +2,7 @@ from typing import Dict, Any
 import os
 import json
 import google.generativeai as genai
-from ..utils import retry_gemini
+from utils import retry_gemini
 
 class CriticAgent:
     def __init__(self):

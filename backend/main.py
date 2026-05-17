@@ -4,12 +4,13 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
-from .models.schemas import ResearchRequest, ResearchReport, AgentStatus
-from .agents.planner import PlannerAgent
-from .agents.researcher import ResearcherAgent
-from .agents.writer import WriterAgent
-from .agents.critic import CriticAgent
-from .agents.compiler import CompilerAgent
+from models.schemas import ResearchRequest, ResearchReport, AgentStatus
+from agents.planner import PlannerAgent
+from agents.researcher import ResearcherAgent
+from agents.writer import WriterAgent
+from agents.critic import CriticAgent
+from agents.compiler import CompilerAgent
+
 
 load_dotenv()
 

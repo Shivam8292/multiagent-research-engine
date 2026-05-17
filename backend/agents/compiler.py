@@ -2,8 +2,8 @@ from typing import List, Dict, Any
 from datetime import datetime
 import os
 import google.generativeai as genai
-from ..models.schemas import ResearchReport, ReportSection, AgentStatus
-from ..utils import retry_gemini
+from models.schemas import ResearchReport, ReportSection, AgentStatus
+from utils import retry_gemini
 
 class CompilerAgent:
     def __init__(self):
