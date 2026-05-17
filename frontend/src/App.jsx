@@ -3,6 +3,7 @@ import SearchBar from './components/SearchBar'
 import AgentStatus from './components/AgentStatus'
 import ReportView from './components/ReportView'
 import HistoryPanel from './components/HistoryPanel'
+import { AlertCircle, X } from 'lucide-react'
 import axios from 'axios'
 import './App.css'
 
@@ -11,13 +12,34 @@ function App() {
   const [query, setQuery] = useState('')
   const [report, setReport] = useState(null)
   const [history, setHistory] = useState([])
+  const [toast, setToast] = useState(null)
 
   useEffect(() => {
+    // Check Health
+    const checkHealth = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/health`)
+        if (res.data.status === 'error') {
+          setToast({ type: 'error', message: res.data.message })
+        }
+      } catch (err) {
+        setToast({ type: 'error', message: "Cannot connect to backend server." })
+      }
+    }
+    checkHealth()
+
     const savedHistory = localStorage.getItem('researchmind_history')
     if (savedHistory) {
       setHistory(JSON.parse(savedHistory))
     }
   }, [])
+
+  const showToast = (message, type='error') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 5000)
+  }
+
+
 
   const handleSearch = async (searchQuery) => {
     setQuery(searchQuery)
@@ -32,7 +54,7 @@ function App() {
       localStorage.setItem('researchmind_history', JSON.stringify(newHistory))
     } catch (error) {
       console.error(error)
-      alert("Error generating report. Please try again.")
+      showToast("Agent failed, please try again.")
       setAppState('idle')
     }
   }
@@ -45,7 +67,18 @@ function App() {
 
   return (
     <div className="flex h-screen w-full bg-dark-bg text-white overflow-hidden font-sans">
+      {toast && (
+        <div className="absolute top-4 right-4 z-50 flex items-center gap-3 bg-red-500 text-white px-4 py-3 rounded-lg shadow-lg animate-in fade-in slide-in-from-top-4">
+          <AlertCircle size={20} />
+          <p className="text-sm font-medium">{toast.message}</p>
+          <button onClick={() => setToast(null)} className="ml-2 hover:bg-red-600 rounded p-1 transition-colors">
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
       <div className="w-64 border-r border-dark-border flex-shrink-0 bg-dark-surface hidden md:block">
+
         <HistoryPanel history={history} onSelect={setReport} onSearch={handleSearch} onClear={() => {setHistory([]); localStorage.removeItem('researchmind_history')}} />
       </div>
       

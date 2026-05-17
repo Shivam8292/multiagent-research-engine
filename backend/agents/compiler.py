@@ -3,13 +3,16 @@ from datetime import datetime
 import os
 import google.generativeai as genai
 from ..models.schemas import ResearchReport, ReportSection, AgentStatus
+from ..utils import retry_gemini
 
 class CompilerAgent:
     def __init__(self):
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
         self.model = genai.GenerativeModel("gemini-1.5-flash", generation_config={"temperature": 0.3})
 
+    @retry_gemini
     def run(self, query: str, draft: str, feedback: Dict[str, Any], raw_data: str, sources: List[str]) -> ResearchReport:
+
         prompt = f"""Improve this research draft based on this feedback: {feedback}
 Original draft: {draft}
 Return improved version in same markdown format."""

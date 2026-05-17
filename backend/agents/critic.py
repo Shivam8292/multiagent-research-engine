@@ -2,13 +2,16 @@ from typing import Dict, Any
 import os
 import json
 import google.generativeai as genai
+from ..utils import retry_gemini
 
 class CriticAgent:
     def __init__(self):
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
         self.model = genai.GenerativeModel("gemini-1.5-flash", generation_config={"temperature": 0.3})
 
+    @retry_gemini
     def run(self, draft: str) -> Dict[str, Any]:
+
         prompt = f"""Review this research report and give:
 1. Quality score out of 10
 2. What is missing or could be improved
