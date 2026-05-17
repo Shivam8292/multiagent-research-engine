@@ -1,10 +1,132 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --bg-app: #f9fafb;
+  --bg-surface: #ffffff;
+  --border-color: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --accent-color: #6366f1;
+  --accent-hover: #4f46e5;
+  --bg-sidebar: #f3f4f6;
+  --bg-input: #ffffff;
+  --bg-hover: #f3f4f6;
+}
+
+.dark {
+  --bg-app: #0b0f19;
+  --bg-surface: #111827;
+  --border-color: #1f2937;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+  --accent-color: #6366f1;
+  --accent-hover: #4f46e5;
+  --bg-sidebar: #0f172a;
+  --bg-input: #1f2937;
+  --bg-hover: #1e293b;
+}
+
+@theme {
+  --color-app-bg: var(--bg-app);
+  --color-app-surface: var(--bg-surface);
+  --color-app-border: var(--border-color);
+  --color-app-text: var(--text-primary);
+  --color-app-textSecondary: var(--text-secondary);
+  --color-app-accent: var(--accent-color);
+  --color-app-accentHover: var(--accent-hover);
+  --color-app-sidebar: var(--bg-sidebar);
+  --color-app-input: var(--bg-input);
+  --color-app-hover: var(--bg-hover);
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+}
 
 body {
+  @apply bg-app-bg text-app-text font-sans m-0 p-0 transition-colors duration-300 antialiased;
+}
 
-  @apply bg-dark-bg text-white font-sans m-0 p-0;
+/* Custom styles for modern markdown rendering */
+.prose h1 {
+  @apply font-display text-3xl font-extrabold text-app-text mb-4 mt-6 tracking-tight;
+}
+
+.prose h2 {
+  @apply font-display text-2xl font-bold text-app-text mb-3 mt-6 border-b border-app-border pb-2 tracking-tight;
+}
+
+.prose h3 {
+  @apply font-display text-xl font-semibold text-app-text mb-2 mt-4 tracking-tight;
+}
+
+.prose p {
+  @apply text-app-textSecondary leading-relaxed mb-4 text-base;
+}
+
+.prose ul, .prose ol {
+  @apply pl-6 mb-4 text-app-textSecondary list-outside;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose li {
+  @apply mb-2 leading-relaxed;
+}
+
+.prose strong {
+  @apply font-semibold text-app-text;
+}
+
+.prose code {
+  @apply px-1.5 py-0.5 rounded bg-app-hover text-app-accent font-mono text-sm border border-app-border;
+}
+
+.prose pre {
+  @apply p-4 rounded-xl bg-app-sidebar border border-app-border overflow-x-auto my-4 font-mono text-sm;
+}
+
+.prose pre code {
+  @apply p-0 bg-transparent border-0 text-app-textSecondary;
+}
+
+.prose blockquote {
+  @apply pl-4 border-l-4 border-app-accent text-app-textSecondary italic my-4;
+}
+
+.prose table {
+  @apply w-full border-collapse my-6 text-sm text-left text-app-textSecondary;
+}
+
+.prose th {
+  @apply py-3 px-4 bg-app-sidebar font-semibold text-app-text border-b border-app-border;
+}
+
+.prose td {
+  @apply py-3 px-4 border-b border-app-border;
+}
+
+/* Custom animations */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+.pulse-dot {
+  animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
 }
