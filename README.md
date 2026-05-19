@@ -159,3 +159,10 @@ cd "multiagent research engine"
 │   └── vite.config.js
 └── docs/                  # Assets and Walkthrough files
 ```
+
+---
+
+## 👨‍💻 Developer
+
+Developed with ❤️ by **[Shivam](https://github.com/Shivam8292)**
+
